@@ -51,8 +51,6 @@
 
 
 
-
-
     <TextView
         android:id="@+id/tvMsg"
         android:layout_width="wrap_content"
@@ -60,6 +58,22 @@
         android:background="@color/colorAccent"
         android:textSize="16sp" />
 
+
+
+
+    <Button
+        android:id="@+id/cleanHistory"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:onClick="cleanHistory"
+        android:textAllCaps="false"
+        android:text="清空历史" />
+    <ListView
+        android:id="@+id/mylistview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+    </ListView>
 
 
 </LinearLayout>

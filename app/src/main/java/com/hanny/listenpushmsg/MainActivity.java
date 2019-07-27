@@ -6,6 +6,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
@@ -13,18 +14,25 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.hanny.listenpushmsg.service.NotifyService;
 import com.hanny.listenpushmsg.utils.HttpUtil;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.SortedSet;
 
 public class MainActivity extends AppCompatActivity {
-
+    private ListView listview;
     private TextView tvMsg;
     public static String postUrl="";
 
@@ -33,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        displayListView();
         //开始监听
         findViewById(R.id.btStart).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -126,6 +134,18 @@ public class MainActivity extends AppCompatActivity {
         EditText editText = (EditText)findViewById(R.id.pkgNameText);
         NotifyService.packageName=editText.getText().toString().trim();
         btn.setText(NotifyService.packageName);
+
+        SharedPreferences sp=getPreferences(MODE_PRIVATE);
+
+        Set<String> historyText = sp.getStringSet("historyText",new HashSet<String>());
+        if (historyText!=null){
+            historyText.add(NotifyService.packageName);
+        }else {
+            historyText=new HashSet<String>();
+            historyText.add(NotifyService.packageName);
+        }
+        sp.edit().putStringSet("historyText",historyText).apply();
+        displayListView();
     }
 
 
@@ -134,6 +154,32 @@ public class MainActivity extends AppCompatActivity {
         EditText editText = (EditText)findViewById(R.id.postUrlText);
         MainActivity.postUrl=editText.getText().toString().trim();
         btn.setText(MainActivity.postUrl);
+
+        SharedPreferences sp=getPreferences(MODE_PRIVATE);
+        Set<String> historyText = sp.getStringSet("historyText",new HashSet<String>());
+        if (historyText!=null){
+            historyText.add(MainActivity.postUrl);
+        }else {
+            historyText=new HashSet<String>();
+            historyText.add(MainActivity.postUrl);
+        }
+        sp.edit().putStringSet("historyText",historyText).apply();
+        displayListView();
+    }
+
+    public void cleanHistory(View view) {
+        SharedPreferences sp=getPreferences(MODE_PRIVATE);
+        sp.edit().putStringSet("historyText",new HashSet<String>()).apply();
+        displayListView();
+    }
+
+    public void displayListView(){
+        listview = (ListView)findViewById(R.id.mylistview);
+        SharedPreferences sp=getPreferences(MODE_PRIVATE);
+        Set<String> historyText = sp.getStringSet("historyText",new HashSet<String>());
+        List<String> listdata = new ArrayList<String>(historyText);
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this,R.layout.list_item,listdata);
+        listview.setAdapter(arrayAdapter);
     }
 
 }
