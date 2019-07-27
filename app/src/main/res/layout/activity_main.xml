@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center_horizontal">
+
+    <Button
+        android:id="@+id/btStart"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@color/colorAccent"
+        android:text="获取读取通知权限！" />
+
+
+    <EditText
+        android:id="@+id/pkgNameText"
+        android:layout_width="match_parent"
+        android:layout_height="68dp"
+        android:ems="10"
+        android:hint="输入拦截的包名"
+        android:inputType="textPersonName" />
+
+
+    <Button
+        android:id="@+id/setPkgName"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:onClick="setPackageName"
+        android:textAllCaps="false"
+        android:text="确认！" />
+
+
+
+    <EditText
+        android:id="@+id/postUrlText"
+        android:layout_width="match_parent"
+        android:layout_height="68dp"
+        android:ems="10"
+        android:hint="转发的服务地址"
+        android:inputType="textPersonName" />
+
+
+    <Button
+        android:id="@+id/setPostUrl"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:onClick="setPostUrl"
+        android:textAllCaps="false"
+        android:text="确认！" />
+
+
+
+
+
+    <TextView
+        android:id="@+id/tvMsg"
+        android:layout_width="wrap_content"
+        android:layout_height="96dp"
+        android:background="@color/colorAccent"
+        android:textSize="16sp" />
+
+
+
+</LinearLayout>
